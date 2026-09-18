@@ -183,9 +183,9 @@ console.log(checkAnagram("listen", "listen")); */
 }
 longestWord("Find and return the longest word in a given sentence."); */
 
-// 13)  Fibonacci Sequence: Generate an array of the first n numbers in the Fibonacci sequence.
+// 13) Fibonacci Sequence: Generate an array of the first n numbers in the Fibonacci sequence.
 
-function Fibonacci(n)
+/* function Fibonacci(n)
 {
     if(n<=0)
     {
@@ -195,4 +195,30 @@ function Fibonacci(n)
     if(n===2) return 2;
     return Fibonacci(n-1) + Fibonacci(n-2);
 }
-console.log(Fibonacci(5));
+console.log(Fibonacci(5)); */
+
+// 14) Prime Number: Write a function to efficiently check if a given number is a prime number.
+
+/* function CheckPrime(num)
+{
+    if(num === 1 || num === 2 || num === 3) return true;
+
+    if(num % 2 != 0 && num % 3 != 0) return true;
+    else return false;
+}
+console.log(CheckPrime(47)); */
+
+// 15) Title Case: Convert a string to Title Case (e.g., "I'm a little tea pot" -> "I'm A Little Tea Pot").
+
+/* function TitleCase(str)
+{
+    str = str.toLowerCase();
+    let arr = str.split(" ");
+
+    arr = arr.map(word => word[0].toUpperCase() + word.slice(1));
+
+    let newStr = arr.join(" ");
+    console.log(newStr);
+}
+TitleCase("I'm a little tea pot"); */
+

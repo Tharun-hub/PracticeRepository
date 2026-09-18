@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+  <head>
+    <script src="https://unpkg.com/@babel/standalone@7.26.0/babel.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,100;1,300;1,400;1,500;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./index.css" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel" data-type="module">
+      import React from "https://esm.sh/react@19/?dev";
+      import ReactDOMClient from "https://esm.sh/react-dom@19/client?dev";
+
+      const Welcome = (props) => {
+      console.log(props)
+      const {name, greeting} = props
+      return (
+      <div>
+        <h1 className="message">{greeting} {name}</h1>
+        <p>Hellppp</p>
+      </div>
+      )};
+      const Greet = () => {
+      return (
+      <div>
+          <Welcome name="Tharun" greeting="HELLO"/>
+          <Welcome name="Aravind" greeting="HELLO"/>
+        </div>);
+      }
+
+      const root = ReactDOMClient.createRoot(document.getElementById("root"));
+      /*root.render(<div>
+      <Welcome name="Tharun" greeting="Hello"/>
+      <Welcome name="BOT" greeting="Hello"/>
+      </div>);*/
+      root.render(<Greet/>);
+    </script>
+  </body>
+</html>
