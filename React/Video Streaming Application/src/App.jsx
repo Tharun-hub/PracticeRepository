@@ -34,7 +34,7 @@ const App = () => {
   }
 
   const searchResults = commentsList.filter(eachComment =>
-    eachComment.name.includes(searchInput)
+    eachComment.name.toLowerCase().includes(searchInput.toLowerCase())
   )
   console.log(searchInput);
   return (
