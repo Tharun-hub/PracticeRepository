@@ -3,7 +3,7 @@ import { useState } from 'react'
 
 import './App.css'
 
-const commentsList = [
+const initialCommentsList = [
   {
     uniqueNo: 1,
     name: 'Rahul',
@@ -28,14 +28,21 @@ const commentsList = [
 
 const App = () => {
   const [searchInput, setSearchInput] = useState('');
+  const [commentsList, setCommentsList] = useState(initialCommentsList);
   function onChangeSearchInput(event)
   {
     setSearchInput(event.target.value);
   }
-
+  
   const searchResults = commentsList.filter(eachComment =>
     eachComment.name.toLowerCase().includes(searchInput.toLowerCase())
   )
+  function deleteComment(uniqueNo)
+  {
+    const filteredComments = commentsList.filter(each => each.uniqueNo !== uniqueNo);
+    setCommentsList(filteredComments);
+    console.log(commentsList);
+  }
   console.log(searchInput);
   return (
     <div className="main-container">
@@ -73,7 +80,7 @@ const App = () => {
           ))} */}
           {searchResults.map(eachComment=> (
             <CommentItem key = {eachComment.uniqueNo}
-            commentDetails = {eachComment}
+            commentDetails = {eachComment} deleteComment={deleteComment}
             />
           ))}
           
