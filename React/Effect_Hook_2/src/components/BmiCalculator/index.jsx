@@ -9,12 +9,24 @@ const getBmi = (height, weight) => {
 }
 
 const BmiCalculator = () => {
-  const [height, setHeight] = useState(170)
-  const [weight, setWeight] = useState(60)
+  let storedHeight = JSON.parse(localStorage.getItem('height'));
+  let storedWeight = JSON.parse(localStorage.getItem('weight'));
+  const [height, setHeight] = useState(storedHeight !== null? storedHeight: 170);
+  const [weight, setWeight] = useState(storedWeight !== null? storedWeight : 60);
 
-  useEffect(() => {
+  // not so optimized way of using useEffect
+  /* useEffect(() => {
     document.title = `Your BMI: ${getBmi(height, weight)}`
-  })
+    localStorage.setItem('height', JSON.stringify(height));
+    localStorage.setItem('weight', JSON.stringify(weight));
+  }) */
+
+  // optimized way of using useEffect
+  useEffect(()=> {document.title = `Your BMI: ${getBmi(height,weight)}`},[height,weight]);
+
+  useEffect(()=> localStorage.setItem('height', JSON.stringify(height)),[height]);
+  
+  useEffect(()=> localStorage.setItem('weight', JSON.stringify(weight)),[weight]);
 
   const onIncrementWeight = () => {
     setWeight(prevWeight => prevWeight + 1)
