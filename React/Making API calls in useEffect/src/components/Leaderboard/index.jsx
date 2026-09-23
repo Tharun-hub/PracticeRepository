@@ -1,21 +1,41 @@
 import './index.css'
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import LeaderboardRow from '../LeaderboardRow'
-async function getData()
-{
-    let userDetails={}; 
+
+
+
+const Leaderboard = () => {
+  const [leaderboardData, setLeaderboardData] = useState([]);
+  
+  async function getData()
+  {
+    let url = "https://apis2.ccbp.in/leaderboard-v2";
+    let response;
+    let responseData;
     try{
-        userDetails = await fetch("https://apis2.ccbp.in/leaderboard-v2");
-        console.log(userDetails.json())
+        response = await fetch(url);
+        responseData = await response.json();
+        /* console.log(responseData); */
+        /* console.log(responseData.leaderboard_data.map(user=>console.log(user))) */
+        let formattedData = responseData.leaderboard_data.map(each =>({
+          id: each.id,
+          rank: each.rank,
+          name: each.name,
+          profileImgUrl: each.profile_image_url,
+          score: each.score,
+          language: each.language,
+          timeSpent: each.time_spent
+        }))
+        setLeaderboardData(formattedData);
+        console.log(formattedData)
     }
     catch(error)
     {
         console.log(error)
     }
     
-}
+  }
 
-const Leaderboard = () => {
   useEffect(()=>{
     getData();
   },[])
@@ -30,7 +50,11 @@ const Leaderboard = () => {
   )
 
   const renderLeaderboard = () => (
-    <ul className="leaderboard-table-container">{renderLeaderboardHeader()}</ul>
+    <ul className="leaderboard-table-container">{renderLeaderboardHeader()}
+    {leaderboardData.map(eachUser =>
+      <LeaderboardRow key = {eachUser.id} userDetails={eachUser}/>
+    )
+    }</ul>
   )
   
   return <div className="leaderboard-container">{renderLeaderboard()}</div>
