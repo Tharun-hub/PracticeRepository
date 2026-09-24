@@ -1,12 +1,11 @@
 import './index.css'
 import { useEffect, useState } from 'react';
 import LeaderboardRow from '../LeaderboardRow'
-
-
+import { PacmanLoader } from "react-spinners";
 
 const Leaderboard = () => {
   const [leaderboardData, setLeaderboardData] = useState([]);
-  
+  const [isLoading, setIsLoading] = useState(true);
   async function getData()
   {
     let url = "https://apis2.ccbp.in/leaderboard-v2";
@@ -28,6 +27,7 @@ const Leaderboard = () => {
         }))
         setLeaderboardData(formattedData);
         console.log(formattedData)
+        setIsLoading(false);
     }
     catch(error)
     {
@@ -35,10 +35,26 @@ const Leaderboard = () => {
     }
     
   }
-
   useEffect(()=>{
-    getData();
+    setTimeout(()=>{
+      getData();
+    },1000)
   },[])
+  /* useEffect(()=>
+  {
+    getData();
+  },[]) */
+  function renderLoader(){
+    /* return (<div>
+      <h1>Loading</h1>
+    </div>
+    ); */
+    return(
+          <div className='loading-view-container'>
+            <PacmanLoader color="#36d7b7" />
+          </div> 
+        )
+  }
   const renderLeaderboardHeader = () => (
     <li className="leaderboard-header">
       <p className="table-heading rank">Rank</p>
@@ -57,7 +73,7 @@ const Leaderboard = () => {
     }</ul>
   )
   
-  return <div className="leaderboard-container">{renderLeaderboard()}</div>
+  return <div className="leaderboard-container">{isLoading ? renderLoader() : renderLeaderboard()}</div>
 }
 
 export default Leaderboard
