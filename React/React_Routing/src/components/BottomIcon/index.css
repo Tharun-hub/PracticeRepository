@@ -1,0 +1,8 @@
+.image{
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    height: 75px;
+    width: 75px;
+    margin: 10px;
+}

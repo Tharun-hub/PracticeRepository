@@ -1,10 +1,11 @@
 import './index.css'
-
+import {Link} from 'react-router'
 const BlogItem = props => {
   const {blogDetails} = props
-  const {imageUrl, topic, title, avatarUrl, author} = blogDetails
+  const {uniqueId, imageUrl, topic, title, avatarUrl, author} = blogDetails
 
   return (
+    <Link to={`/blogs/${uniqueId}`} className='blog-list-item-link'> 
     <li className="blog-list-item">
       <img className="thumbnail" src={imageUrl} alt={title} />
       <div className="details-container">
@@ -16,6 +17,7 @@ const BlogItem = props => {
         </div>
       </div>
     </li>
+    </Link>
   )
 }
 
