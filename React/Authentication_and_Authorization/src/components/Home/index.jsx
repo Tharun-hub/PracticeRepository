@@ -1,10 +1,15 @@
 import {Link} from 'react-router'
-
+import Cookies from 'js-cookie'
 import Header from '../Header'
-
+import { Navigate } from 'react-router'
 import './index.css'
 
 const Home = () => {
+  let jwtToken = Cookies.get("jwt_token");
+  if(jwtToken === undefined)
+  {
+    return <Navigate to={"/login"}></Navigate>
+  }
   return (
     <div className="bg-container">
       <Header />

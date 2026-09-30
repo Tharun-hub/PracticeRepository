@@ -1,14 +1,21 @@
-import {useState} from 'react'
-
+import { useState } from 'react'
+import Cookies from 'js-cookie'
 import './index.css'
-import { createCookie, useNavigate } from 'react-router'
+import { useNavigate, Navigate } from 'react-router'
 
 const LoginForm = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [loginStatus, setLoginStatus] = useState(false);
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [loginErrorMessage, setLoginErrorMessage] = useState("");
   const navigate = useNavigate()
+  const jwtToken = Cookies.get("jwt_token");
+  if(jwtToken !== undefined)
+  {
+    return <Navigate to="/"/>
+  }
+
+  
   function submitForm(event)
   {
     event.preventDefault();
@@ -24,19 +31,18 @@ const LoginForm = () => {
     }
     console.log(options.body);
     const apiUrl = `https://apis.ccbp.in/login`
-    /* const response = await fetch(apiUrl,options);
+    const response = await fetch(apiUrl,options);
     const responseData = await response.json();
     console.log(responseData,response);
     if(response.ok)
     {
-      setLoginStatus(true);
       onLoginSuccess(responseData.jwt_token);
     }
     else
     {
       onLoginFailure(responseData.error_msg);
-    } */
-    try{
+    }
+    /* try{
       const response = await fetch(apiUrl,options);
       const responseData = await response.json();
       console.log(responseData,response);
@@ -46,22 +52,23 @@ const LoginForm = () => {
     catch(error)
     {
       onLoginFailure(error.error_msg)
-    }
+    } */
   }
+  
   function onLoginSuccess(token)
   {
-    /* navigate("/", {replace:true} ) */
-    console.log(token)
-    loginStatus(true);
-    let cookie = createCookie({loginToken: token})
-    console.log(cookie);
+    navigate("/", {replace:true} )
+
+    Cookies.set("jwt_token", token,{expires:1});
+
+    setShowErrorMessage(false);
+    setLoginErrorMessage("");
   }
 
   function onLoginFailure(message)
   {
     setLoginErrorMessage(message);
-    setLoginStatus(true);
-    console.log(loginErrorMessage)
+    setShowErrorMessage(true);
   }
 
   const onChangeUsername = event => {
@@ -123,10 +130,10 @@ const LoginForm = () => {
         />
         <div className="input-container">{renderUsernameField()}</div>
         <div className="input-container">{renderPasswordField()} </div>
-        {loginStatus && <p className='error-message'>*{loginErrorMessage}</p>}
         <button  type="submit" className="login-button">
           Login
         </button>
+        {showErrorMessage && <p className='error-message'>* {loginErrorMessage}</p>}
       </form>
     </div>
   )
