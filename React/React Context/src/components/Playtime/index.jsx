@@ -1,5 +1,6 @@
 import './index.css'
-
+import { use } from 'react'
+import LanguageContext from '../../context/LanguageContext'
 const playtimeContent = {
   EN: {
     heading: 'Playtime. Anytime',
@@ -18,7 +19,7 @@ const playtimeContent = {
   },
 }
 
-const Playtime = props => {
+const Playtime = () => {
   const getPlaytimeData = activeLanguage => {
     switch (activeLanguage) {
       case 'EN':
@@ -31,7 +32,8 @@ const Playtime = props => {
         return null
     }
   }
-  const {activeLanguage} = props
+  const languageContextValue = use(LanguageContext)
+  const {activeLanguage} = languageContextValue
   const {heading, description} = getPlaytimeData(activeLanguage)
 
   return (

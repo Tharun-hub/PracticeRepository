@@ -1,5 +1,6 @@
 import './index.css'
-
+import { use } from 'react'
+import LanguageContext from '../../context/LanguageContext'
 const landingSectionContent = {
   EN: {
     heading: 'Windows 11',
@@ -18,7 +19,8 @@ const landingSectionContent = {
   },
 }
 
-const LandingSection = props => {
+const LandingSection = () => {
+
   const getLandingSectionData = activeLanguage => {
     switch (activeLanguage) {
       case 'EN':
@@ -31,7 +33,8 @@ const LandingSection = props => {
         return null
     }
   }
-  const {activeLanguage} = props
+  const languageContextValue = use(LanguageContext);
+  const {activeLanguage} = languageContextValue
   const {heading, description} = getLandingSectionData(activeLanguage)
   return (
     <div className="bg-container">

@@ -1,13 +1,16 @@
 import './index.css'
-
+import { use } from 'react'
+import LanguageContext from '../../context/LanguageContext' 
 const languageOptions = [
   {id: 1, value: 'EN', language: 'English'},
   {id: 2, value: 'HI', language: 'हिंदी'},
   {id: 3, value: 'TE', language: 'తెలుగు'},
 ]
 
-const Header = props => {
-  const {activeLanguage, changeLanguage} = props
+const Header = () => {
+  
+  const languageContextValue = use(LanguageContext);
+  const {activeLanguage, changeLanguage} = languageContextValue;
 
   const onChangeLanguage = event => {
     changeLanguage(event.target.value)

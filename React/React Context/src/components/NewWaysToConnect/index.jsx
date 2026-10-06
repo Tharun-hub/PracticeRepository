@@ -1,5 +1,6 @@
+import LanguageContext from '../../context/LanguageContext'
 import './index.css'
-
+import { use } from 'react'
 const newWaysToConnectContent = {
   EN: {
     heading: 'New ways to connect',
@@ -18,7 +19,7 @@ const newWaysToConnectContent = {
   },
 }
 
-const NewWaysToConnect = props => {
+const NewWaysToConnect = () => {
   const getNewWaysToConnectData = activeLanguage => {
     switch (activeLanguage) {
       case 'EN':
@@ -31,7 +32,8 @@ const NewWaysToConnect = props => {
         return null
     }
   }
-  const {activeLanguage} = props
+  const languageContextValue = use(LanguageContext)
+  const {activeLanguage} = languageContextValue
   const {heading, description} = getNewWaysToConnectData(activeLanguage)
 
   return (
