@@ -17,9 +17,9 @@ const App = () => {
         activeLanguage, 
         changeLanguage:changeLanguage}
       }>
-      <Header activeLanguage={activeLanguage} changeLanguage={changeLanguage} />
-      <LandingSection  />
-      <FeaturesSection  />
+      <Header />
+      <LandingSection />
+      <FeaturesSection />
     </LanguageContext>
   )
 }
