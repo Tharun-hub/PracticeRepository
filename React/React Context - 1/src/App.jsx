@@ -15,14 +15,23 @@ const App = () =>
     const [cartList, setCartList] = useState([]);
    
     
-    function addCartItem(item)
+    function addCartItem(newItem)
     {
       /* console.log("added cart item")
       const temp = cartList;
       temp.push(item);
       setCartList(temp) */
       
-      setCartList(prev => [...prev, item])
+      setCartList(prev => {
+        const existingItem = prev.find(item => item.id === newItem.id)
+        
+        if(existingItem)
+        {
+          return prev.map(item => item.id === newItem.id? {...item, quantity: item.quantity + newItem.quantity,}:item)
+        }
+
+        return [...prev, newItem]
+      })
     }
     function deleteCartItem(id)
     {

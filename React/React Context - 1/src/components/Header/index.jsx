@@ -1,14 +1,21 @@
 import {Link} from 'react-router'
 import Cookies from 'js-cookie'
 import {useNavigate} from 'react-router'
-
+import {use} from 'react'
+import CartContext from '../../context/cartContext'
 import './index.css'
 
 const Header = () => {
+  const cartContextValue = use(CartContext);
+  const {cartList} = cartContextValue;
   const navigate = useNavigate()
   const onClickLogout = () => {
     Cookies.remove('jwt_token')
     navigate('/login', {replace: true})
+  }
+  function renderCartItemsCount()
+  {
+    return cartList.length> 0 && <span className='cart-count-badge'>{cartList.length}</span>
   }
 
   return (
@@ -56,6 +63,7 @@ const Header = () => {
             <li className="nav-menu-item">
               <Link to="/cart" className="nav-link">
                 Cart
+                {renderCartItemsCount()}
               </Link>
             </li>
           </ul>
@@ -96,6 +104,7 @@ const Header = () => {
                 alt="nav cart"
                 className="nav-bar-img"
               />
+              {renderCartItemsCount()}
             </Link>
           </li>
         </ul>
