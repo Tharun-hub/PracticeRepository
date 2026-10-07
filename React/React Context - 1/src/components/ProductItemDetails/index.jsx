@@ -1,9 +1,9 @@
-import {useState, useEffect} from 'react'
+import {useState, useEffect, use} from 'react'
 import {Link, useParams} from 'react-router'
 import Cookies from 'js-cookie'
 /* import {BeatLoader} from 'react-spinners/BeatLoader'*/
 import {BsPlusSquare, BsDashSquare} from 'react-icons/bs'
-
+import CartContext from '../../context/cartContext'
 import Header from '../Header'
 import SimilarProductItem from '../SimilarProductItem'
 
@@ -17,6 +17,8 @@ const apiStatusConstants = {
 }
 
 const ProductItemDetails = () => {
+  const cartContextValue = use(CartContext);
+  const {addCartItem} = cartContextValue
   const [apiResponse, setApiResponse] = useState({
     status: apiStatusConstants.initial,
     data: null,
@@ -88,6 +90,27 @@ const ProductItemDetails = () => {
     setQuantity(prevQuantity => prevQuantity + 1)
   }
 
+  function onAddToCart()
+  {
+    /* addCartItem({
+      title: "Product 1",
+      brand: "Brand Name",
+      id: 1001,
+      imageUrl:
+        "https://assets.ccbp.in/frontend/react-js/sample-product-img.jpg",
+      price: 760,
+      quantity: 5,
+    }) */
+    const cart = {
+      title : apiResponse.data.productDetails.title,
+      brand : apiResponse.data.productDetails.brand,
+      id: apiResponse.data.productDetails.id,
+      imageUrl: apiResponse.data.productDetails.imageUrl,
+      price: apiResponse.data.productDetails.price,
+      quantity: quantity
+    }    
+    addCartItem(cart)
+  }
   const renderLoadingView = () => (
     <div className="products-details-loader-container" data-testid="loader">
       {/* <BeatLoader color="#7032a5" /> */}
@@ -177,7 +200,7 @@ const ProductItemDetails = () => {
                 />
               </button>
             </div>
-            <button type="button" className="button add-to-cart-btn">
+            <button onClick={onAddToCart} type="button" className="button add-to-cart-btn">
               ADD TO CART
             </button>
           </div>
